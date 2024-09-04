@@ -14,25 +14,16 @@ public class Player : MonoBehaviour
     public bool isOnFloor = false;
     public bool isJumping = false;
     public float radius = 0.2f;
-    
     int extraJumps = 1;
-
     [Header("Attack Variables")]
     public Transform attackCheck;
     public float radiusAttack;
     public LayerMask layerEnemy;
-    float timeNextAttack;
-
-
-
+    float timeNextAttack;https://github.com/NPiler84
 
     Rigidbody2D body;
     SpriteRenderer sprite;
     Animator anim;
-
-
-
-
 
     //funcao start atribui os valores das variaveis e associa aos metodos do MonoBehaiour
     void Start()
@@ -42,22 +33,29 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-
-
-
-    // monitoramento das entradas de controle e animacoes
+    // monitoramento das entradas de controle e animacoes feature-release
     void Update()
-    {
-        
-        //condicional de pulo
-
+    { 
+        /*condicional de pulo
         isOnFloor = Physics2D.OverlapCircle( groundCheck.position, radius, whatIsGround );
         //   if (Input.GetButtonDown("Jump") && isOnFloor == true)
         //   isJumping = true;
-
-
         //condicional pulo duplo
-        if(Input.GetButtonDown("Jump") && extraJumps > 0)
+        if(timeNextAttack <= 0f)
+        {
+            if(Input.GetButtonDown("Fire1") && body.velocity == new Vector2 (0, 0))
+            {
+                anim.SetTrigger ("Attack");
+                timeNextAttack = 0.2f;
+                PlayerAttack();
+            }
+                else {
+
+                    timeNextAttack -= Time.deltaTime;
+
+                    }  
+        }*/
+         if(Input.GetButtonDown("Jump") && extraJumps > 0)
         {
             isJumping = true;
             extraJumps --;
@@ -72,31 +70,9 @@ public class Player : MonoBehaviour
             anim.SetTrigger ("Attack");
             PlayerAttack();
         }
-        /*
-        if(timeNextAttack <= 0f)
-        {
-            if(Input.GetButtonDown("Fire1") && body.velocity == new Vector2 (0, 0))
-            {
-                anim.SetTrigger ("Attack");
-                timeNextAttack = 0.2f;
-                PlayerAttack();
-            }
-                else {
-
-                    timeNextAttack -= Time.deltaTime;
-
-                    }
-
-
-            
-        }*/
         PlayerAnimation();
         
     }
-
-
-
-
 
     //implemantacao de movimento
     void FixedUpdate()
@@ -109,8 +85,6 @@ public class Player : MonoBehaviour
         {
             Flip();
         }
-
-
         if (isJumping)//pulo alto, pulo baixo
 
             {
@@ -126,8 +100,6 @@ public class Player : MonoBehaviour
         }
 
     }
-
-
     //funcoes para ajustes de sprites
     void Flip()
     {
@@ -149,12 +121,12 @@ public class Player : MonoBehaviour
                 Debug.Log(enemiesAttack [i].name);
             }
     }
-
-    void OnDrawGizmosSelected()
+    void OnDrawGizmosSelected()//test
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, radius);
         Gizmos.DrawWireSphere(attackCheck.position, radiusAttack);
+         Gizmos.DrawWireSphere(groundCheck.position, radius);
     }
 
 
